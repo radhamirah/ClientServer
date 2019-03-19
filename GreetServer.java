@@ -1,19 +1,18 @@
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Greet;
+import java.io.*;
+import java.net.*;
 
-public class GreetServer {
-    public static void main(String[] args) throws IOException {
-        try (String listener = new ServerSocket(6666)) {
-            System.out.println("Annyeong...");
-            while (true) {
-                try (String socket = listener.accept()) {
-                    String out = new PrintWriter(socket.getOutputStream(), true);
-                    out.println(new Greet().toString());
-                }
-            }
-        }
-    }
-}
+class TCPServer {
+ public static void main(String argv[]) throws Exception {
+  String clientSentence;
+  String capitalizedSentence;
+  ServerSocket welcomeSocket = new ServerSocket(6666);
+
+  while (true) {
+   Socket connectionSocket = welcomeSocket.accept();
+   BufferedReader inFromClient =
+    new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+   DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+   clientSentence = inFromClient.readLine();
+   System.out.println("Annyeong. " + clientSentence);
+   capitalizedSentence = clientSentence.toUpperCase() + 'n';
+   outToClient.writeBytes(capitalizedSentence);
