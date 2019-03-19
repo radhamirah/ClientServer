@@ -15,7 +15,7 @@ class TcpServer {
    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
    clientSentence = inFromClient.readLine();
    System.out.println("Annyeong. " + clientSentence);
-   PrintWriter out = new PrintWriter(skt.getOutputStream(), true) ;
+   PrintWriter out = new PrintWriter(connectionSocket.getOutputStream(), true) ;
    out.close();
    connectionSocket.close();
    welcomeSocket.close();
