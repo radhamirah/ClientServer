@@ -10,6 +10,8 @@ int main()
     int network_socket;
     network_socket=socket(AF_INET, SOCK_STREAM, 0);
  
+    char server_response[256];
+ 
     struct sockaddr_in server_address;
     server_address.sin_family=AF_INET;
     server_address.sin_port=htons(6666);
@@ -19,12 +21,10 @@ int main()
     if(connect_socket==-1)
     {
         printf("Message: ");
-        recv(client_socket,&ch,sizeof(ch),0);
+        recv(network_socket, &server_response ,sizeof(server_address),0);
         printf("Message Received: %s",ch);
         
     }
- 
-    char ch[1024];
      
     close(network_socket);
 return 0;
