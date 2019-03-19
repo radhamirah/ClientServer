@@ -6,7 +6,7 @@ import java.util.Greet;
 
 public class GreetServer {
     public static void main(String[] args) throws IOException {
-        try (var listener = new ServerSocket(59090)) {
+        try (var listener = new ServerSocket(6666)) {
             System.out.println("Annyeong...");
             while (true) {
                 try (var socket = listener.accept()) {
