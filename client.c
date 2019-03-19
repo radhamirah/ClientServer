@@ -34,7 +34,7 @@ int main(){
   recv(clientSocket, &server_response, 256, 0);
 
   /*---- Print the received message ----*/
-  printf("Hello %s",buffer);   
+  printf("Hello %s",server_response);   
 
   return 0;
 }
