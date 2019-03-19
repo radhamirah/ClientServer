@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-class TCPServer {
+class TcpServer {
  public static void main(String argv[]) throws Exception {
   String clientSentence;
   String capitalizedSentence;
@@ -14,6 +14,11 @@ class TCPServer {
    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
    clientSentence = inFromClient.readLine();
    System.out.println("Annyeong. " + clientSentence);
+   out.print(data);
+   out.close();
+   connectionSocket.close();
+   welcomeSocket.close();
+   
    
   }
  }
