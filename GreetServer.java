@@ -15,4 +15,3 @@ class TCPServer {
    clientSentence = inFromClient.readLine();
    System.out.println("Annyeong. " + clientSentence);
    capitalizedSentence = clientSentence.toUpperCase() + 'n';
-   outToClient.writeBytes(capitalizedSentence);
