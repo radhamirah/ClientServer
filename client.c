@@ -21,7 +21,7 @@ int main()
     int connect_socket=connect(network_socket,(struct sockaddr*)&server_address,sizeof(server_address));
     if(connect_socket==-1)
     {
-        printf("Message: ");
+        printf("Hello! %s\n", server_response);
         recv(network_socket, &server_response ,sizeof(server_address),0);
         printf("Hello! %s\n", server_response);
         
