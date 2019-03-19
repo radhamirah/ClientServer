@@ -6,11 +6,11 @@ import java.util.Greet;
 
 public class GreetServer {
     public static void main(String[] args) throws IOException {
-        try (var listener = new ServerSocket(6666)) {
+        try (String listener = new ServerSocket(6666)) {
             System.out.println("Annyeong...");
             while (true) {
-                try (var socket = listener.accept()) {
-                    var out = new PrintWriter(socket.getOutputStream(), true);
+                try (String socket = listener.accept()) {
+                    String out = new PrintWriter(socket.getOutputStream(), true);
                     out.println(new Greet().toString());
                 }
             }
