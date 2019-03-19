@@ -31,7 +31,7 @@ int main(){
   connect(clientSocket, (struct sockaddr *) &serverAddr, addr_size);
 
   /*---- Read the message from the server into the buffer ----*/
-  recv(clientSocket, buffer, 1024, 0);
+  recv(clientSocket, &server_response, 256, 0);
 
   /*---- Print the received message ----*/
   printf("Hello %s",buffer);   
