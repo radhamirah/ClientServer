@@ -14,4 +14,3 @@ class TCPServer {
    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
    clientSentence = inFromClient.readLine();
    System.out.println("Annyeong. " + clientSentence);
-   capitalizedSentence = clientSentence.toUpperCase() + 'n';
