@@ -23,7 +23,6 @@ int main()
     {
         printf("Hello! %s\n", server_response);
         recv(network_socket, &server_response ,sizeof(server_address),0);
-        printf("Hello! %s\n", server_response);
         
     }
      
