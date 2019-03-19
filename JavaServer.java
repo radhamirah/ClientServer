@@ -9,6 +9,6 @@ DataInputStream dis=new DataInputStream(s.getInputStream());
 String  str=(String)dis.readUTF();  
 System.out.println("Annyeong "+str);  
 ss.close();  
-}catch(Exception e){System.out.println(e);}  
+} 
 }  
 }  
