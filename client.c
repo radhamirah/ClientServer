@@ -1,14 +1,13 @@
-#include <stdio.h>
+##include <stdio.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
 #include <stdlib.h>
-
 #include <arpa/inet.h>
 
 int main(){
   int clientSocket;
-  char server_response[256];
+  char buffer[1024];
   struct sockaddr_in serverAddr;
   socklen_t addr_size;
 
@@ -31,10 +30,11 @@ int main(){
   connect(clientSocket, (struct sockaddr *) &serverAddr, addr_size);
 
   /*---- Read the message from the server into the buffer ----*/
-  recv(clientSocket, &server_response, 256, 0);
+  recv(clientSocket, buffer, 1024, 0);
 
   /*---- Print the received message ----*/
-  printf("Hello %s",server_response);   
+  printf("Data received: %s",buffer);   
 
   return 0;
+}
 }
