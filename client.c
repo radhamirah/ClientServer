@@ -4,6 +4,7 @@
 #include<sys/socket.h>
 #include<netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
  
 int main()
 {
@@ -22,7 +23,7 @@ int main()
     {
         printf("Message: ");
         recv(network_socket, &server_response ,sizeof(server_address),0);
-        printf("Message Received: %s",ch);
+        printf("Message Received: %s",server_response);
         
     }
      
