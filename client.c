@@ -23,7 +23,7 @@ int main(){
 
   recv(clientSocket, buffer, 1024, 0);
 
-  printf("Data received: %s",buffer);   
+  printf("Hello %s"\n",buffer);   
 
   return 0;
 }
