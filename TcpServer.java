@@ -16,7 +16,6 @@ class TcpServer {
    clientSentence = inFromClient.readLine();
    System.out.println("Annyeong. " + clientSentence);
    PrintWriter out = new PrintWriter(skt.getOutputStream(), true) ;
-   out.print(data);
    out.close();
    connectionSocket.close();
    welcomeSocket.close();
