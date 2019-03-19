@@ -1,6 +1,6 @@
 import java.io.*;  
 import java.net.*;  
-public class MyServer {  
+public class JavaServer {  
 public static void main(String[] args){  
 try{  
 ServerSocket ss=new ServerSocket(5506);  
