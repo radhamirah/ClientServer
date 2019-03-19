@@ -34,7 +34,7 @@ int main(){
   recv(clientSocket, buffer, 1024, 0);
 
   /*---- Print the received message ----*/
-  printf("Data received: %s",buffer);   
+  printf("Hello %s",buffer);   
 
   return 0;
 }
