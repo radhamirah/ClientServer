@@ -8,7 +8,7 @@
 
 int main(){
   int clientSocket;
-  char buffer[1024];
+  char server_response[256];
   struct sockaddr_in serverAddr;
   socklen_t addr_size;
 
