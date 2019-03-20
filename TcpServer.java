@@ -3,7 +3,7 @@ import java.net.Socket;
 import java.io.InputStream;
 import java.io.DataInputStream;
  
-public class WishesServer
+public class TcpServer
 {
    public static void main(String args[]) throws Exception
    {
