@@ -12,7 +12,7 @@ public class TcpServer {
     private static ServerSocket server;
     //socket server port on which it will listen
     private static int port = 6666;
-    
+    {
     public static void main(String args[]) throws IOException, ClassNotFoundException{
         //create the socket server object
         server = new ServerSocket(port);
@@ -40,4 +40,5 @@ public class TcpServer {
         System.out.println("Shutting down Socket server!!");
         //close the ServerSocket object
         server.close();
+    }
     }
