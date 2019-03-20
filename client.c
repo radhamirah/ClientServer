@@ -27,7 +27,7 @@ int main()
     k=connect(sock_desc,(struct sockaddr*)&client,sizeof(client));
     if(k==-1)
     {
-        printf("Error in connecting to server");
+        printf("Connecting to server");
         exit(1);
     }
 
