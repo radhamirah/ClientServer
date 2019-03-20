@@ -5,6 +5,7 @@
 #include<netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#DEFINE PORT 6666
  
 int main()
 {
@@ -14,7 +15,7 @@ int main()
  
     struct sockaddr_in server_address;
     server_address.sin_family=AF_INET;
-    server_address.sin_port=htons(6666);
+    server_address.sin_port=htons(port);
     server_address.sin_addr.s_addr=inet_addr("192.168.31.132");
  
     int connect_socket=connect(network_socket,(struct sockaddr*)&server_address,sizeof(server_address));
