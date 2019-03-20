@@ -1,34 +1,23 @@
-import java.io.*;
-import java.net.*;
-
-public class TcpServer
+import java.net.ServerSocket;            
+import java.net.Socket;            
+import java.io.InputStream;
+import java.io.DataInputStream;
+ 
+public class WishesServer
 {
-  public static void main(String[] args) throws Exception
-  {
-      ServerSocket sersock = new ServerSocket(6666);
-      System.out.println("Annyeong");
-      Socket sock = sersock.accept( );                          
-                              // reading from keyboard (keyRead object)
-      BufferedReader keyRead = new BufferedReader(new InputStreamReader(System.in));
-	                      // sending to client (pwrite object)
-      OutputStream ostream = sock.getOutputStream(); 
-      PrintWriter pwrite = new PrintWriter(ostream, true);
+   public static void main(String args[]) throws Exception
+   {
+     ServerSocket sersock = new ServerSocket(6666); 
+     System.out.println("server is ready");  //  message to know the server is running
  
-                              // receiving from server ( receiveRead  object)
-      InputStream istream = sock.getInputStream();
-      BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
+     Socket sock = sersock.accept();               
+                                                                                          
+     InputStream istream = sock.getInputStream();  
+     DataInputStream dstream = new DataInputStream(istream);
  
-      String receiveMessage, sendMessage;               
-      while(true)
-      {
-        if((receiveMessage = receiveRead.readLine()) != null)  
-        {
-           System.out.println(receiveMessage);         
-        }         
-        sendMessage = keyRead.readLine(); 
-        pwrite.println(sendMessage);             
-        pwrite.flush();
-      }               
-    }                    
-}         
+     String message2 = dstream.readLine();
+     System.out.println(message2);
+     dstream .close(); istream.close(); sock.close(); sersock.close();
+  }
+}      
 
