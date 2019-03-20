@@ -21,7 +21,7 @@ int main()
     }
 
     client.sin_family=AF_INET;
-    client.sin_addr.s_addr=INADDR_ANY;
+    client.sin_addr.s_addr=inet_addr("192.168.31.132");
     client.sin_port=6666;
 
     k=connect(sock_desc,(struct sockaddr*)&client,sizeof(client));
