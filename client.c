@@ -4,7 +4,7 @@
 #include<netdb.h>
 #include<stdlib.h>
 #include <arpa/inet.h>
-
+#include <unistd.h>
 int main()
 {
     char buf[100];
