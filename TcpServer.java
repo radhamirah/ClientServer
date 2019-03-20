@@ -1,38 +1,61 @@
-import java.net.* ;
-import java.io.*;
+
+ import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class TcpServer {
-    
-    //static ServerSocket variable
-    private static ServerSocket server;
-    //socket server port on which it will listen
-    private static int port = 6666;
-  
-    public static void main(String args[]) throws IOException, ClassNotFoundException{
-        //create the socket server object
-        server = new ServerSocket(port);
-        //keep listens indefinitely until receives 'exit' call or program terminates
-        while(true){
-            System.out.println("Waiting for the client request");
-            //creating socket and waiting for client connection
-            Socket socket = server.accept();
-            //read from socket to ObjectInputStream object
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-            //convert ObjectInputStream object to String
-            String message = (String) ois.readObject();
-            System.out.println("Message Received: " + message); }
-            //create ObjectOutputStream object
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-            //write object to Socket
-            oos.writeObject("Hi Client "+message);
-            //close resources
-            ois.close();
-            oos.close();
-            socket.close();
-            //terminate the server if client sends exit request
-            if(message.equalsIgnoreCase("exit")) break;
+
+    private static Socket socket;
+
+    public static void main(String[] args)
+    {
+        try
+        {
+            int port = 6666;
+            ServerSocket serverSocket = new ServerSocket(port);
+            socket = serverSocket.accept();
+            System.out.println("Server Started and listening to the port 6666");
+            //while(true){
+                //Server is running always. This is done using this while(true) loop
+                //Reading the message from the client
+
+                InputStream is = socket.getInputStream();
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader br = new BufferedReader(isr);
+                String number = br.readLine();
+                System.out.println("Received from client: "+number+"\n");
+
+                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+                String s = bufferRead.readLine();
+
+                //Sending the response back to the client.
+                OutputStream os = socket.getOutputStream();
+                OutputStreamWriter osw = new OutputStreamWriter(os);
+                BufferedWriter bw = new BufferedWriter(osw);
+                bw.write(s);
+                bw.flush();
+                System.out.println("Sent (to " + socket + ") client: "+s+"\n");
+
+                //String abc = bufferRead.readLine();
+                //System.out.println("SAA");
+            //}
         }
-        System.out.println("Shutting down Socket server!!");
-        //close the ServerSocket object
-        server.close();
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                socket.close();
+            }
+            catch(Exception e){}
+        }
     }
+}    
