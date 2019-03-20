@@ -11,7 +11,6 @@ int main()
     int network_socket;
     network_socket=socket(AF_INET, SOCK_STREAM, 0);
  
-    char server_response[256];
  
     struct sockaddr_in server_address;
     server_address.sin_family=AF_INET;
@@ -21,13 +20,17 @@ int main()
     int connect_socket=connect(network_socket,(struct sockaddr*)&server_address,sizeof(server_address));
     if(connect_socket==-1)
     {
-        printf("Hello! %s\n", server_response);
-        recv(network_socket, &server_response ,sizeof(server_address),0);
-        
+         printf("error");
     }
+  
+     char server_response[256];
+     recv(network_socket, &server_response, sizeof(server_response), 0);
+   
+     printf("Hello! %s\n", server_response);
      
     close(network_socket);
-return 0;
+ 
+    return 0;
 }   
   
   
