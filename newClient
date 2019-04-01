@@ -11,7 +11,7 @@
 
 void main(){
 	
-	int SocketClient;
+	int SocketClient , n=0;
 	int sock = 0, valread;
 	struct sockaddr_in serverAddr;
 	char buffer[1024];
@@ -24,11 +24,28 @@ void main(){
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(PORT);
 	serverAddr.sin_addr.s_addr = inet_addr("192.168.31.132");
+        
+	if connect(SocketClient, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) < 0 );
+	{
+	   printf("Connect to server");
+	   return 1;
+	}
+	
 
-	connect(SocketClient, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
-	printf("Connect to server");
-
-	recv(SocketClient, buffer, 1024, 0);
-	printf("[+] Hi Server: %s", buffer);
+	while ((n = recv(SocketClient, buffer, 1024, -1)) > 0)
+	{
+	  buffer[n] = 0;
+	  if(fputs(buffer, stdout) == EOF)
+	  {
+	  printf("Error : fputs error");
+	  }
+	}
+	
+	if(n < 0)
+	{
+	  printf("Read error");
+	}
+	
+	return 0;
 	
 }
