@@ -4,7 +4,7 @@ class newServer
 {
   public static void main(String[] args) throws Exception
   {
-      ServerSocket sersock = new ServerSocket(3000);
+      ServerSocket sersock = new ServerSocket(6606);
       System.out.println("Hello! ");
       Socket sock = sersock.accept( );                          
                              
