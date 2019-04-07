@@ -1,21 +1,22 @@
- import java.io.*;
+import java.io.*;
 import java.net.*;
-class newServer
+public class newServer
 {
   public static void main(String[] args) throws Exception
   {
       ServerSocket sersock = new ServerSocket(6606);
-      System.out.println("Hello! ");
+      System.out.println("Server  ready for chatting");
       Socket sock = sersock.accept( );                          
-                             
+                              // reading from keyboard (keyRead object)
       BufferedReader keyRead = new BufferedReader(new InputStreamReader(System.in));
-	                      
+	                      // sending to client (pwrite object)
       OutputStream ostream = sock.getOutputStream(); 
-      PrintWriter pwriter = new PrintWriter(ostream, true);
-
+      PrintWriter pwrite = new PrintWriter(ostream, true);
+ 
+                              // receiving from server ( receiveRead  object)
       InputStream istream = sock.getInputStream();
       BufferedReader receiveRead = new BufferedReader(new InputStreamReader(istream));
-
+ 
       String receiveMessage, sendMessage;               
       while(true)
       {
@@ -24,8 +25,8 @@ class newServer
            System.out.println(receiveMessage);         
         }         
         sendMessage = keyRead.readLine(); 
-        pwriter.println(sendMessage);             
-        pwriter.flush();
+        pwrite.println(sendMessage);             
+        pwrite.flush();
       }               
     }                    
 }                  
