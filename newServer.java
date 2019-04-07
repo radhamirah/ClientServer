@@ -1,35 +1,59 @@
 import java.net.*;
 import java.io.*;
-public class newServer 
-{
-	public static void main( String args[]) throws Exception
-	{
-		ServerSocket srs = new ServerSocket(6606);
-		System.out.println("Server is running...");
-		Socket ss=srs.accept();
-		System.out.println("connection establised");
-BufferedReader kb = new BufferedReader(new InputStreamReader(System.in));
-BufferedReader br = new BufferedReader(new InputStreamReader(ss.getInputStream()));
-DataOutputStream dos = new DataOutputStream(ss.getOutputStream());
- 
- while(true)
- {
-  //System.out.println("server repeat as long as client not send null");
-  String s2,s3; 
-  while((s2=br.readLine())!=null)
-  {
- 	System.out.println("Client said : "+s2);
- 	System.out.println("Enter text ");
-    s3 = kb.readLine();
-    //System.out.println("Answer send to client machine");
- 	dos.writeBytes(s3+"\n");
-  }
-  System.out.println("Terminated..");
-  ss.close(); 
-  srs.close();
-  dos.close();
-  kb.close();
-  System.exit(0);
-  }
- }
+import java.lang.*;
+import java.util.*;
+class Server{
+
+    public static void main (String[] args)
+    {
+      try{      
+      //Defining/opening connection
+      ServerSocket srvr = new ServerSocket(6606);
+      Socket skt = srvr.accept();
+      
+      InputStreamReader bf = new InputStreamReader(skt.getInputStream());
+      BufferedReader in= new BufferedReader(bf);
+      PrintWriter out = new PrintWriter(skt.getOutputStream(),true);
+      Scanner s=new Scanner(System.in);
+      
+      Thread send=new Thread(new Runnable(){
+      String msg;
+      @Override
+      public void run(){
+            while(true){
+  
+                  msg=s.nextLine();
+                  out.print(msg);
+                  out.flush();
+            }
+      }
+      });
+      send.start();
+      
+      Thread receive=new Thread(new Runnable(){
+      String msg;
+      @Override
+      public void run(){
+            while(true){
+                  try{
+                        msg=in.readLine();
+                  }catch(IOException e){
+                        e.printStackTrace();
+                  }
+                  System.out.print("Client: "+msg);
+            }
+      }
+      });
+      receive.start();
+            
+      
+      
+      //closing connection
+      //out.close();
+      //skt.close();
+      //srvr.close();
+      }catch (IOException e){
+            e.printStackTrace();
+      }
+    }
 }
