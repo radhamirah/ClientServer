@@ -10,8 +10,8 @@ int main()
     char buf[100];
     int k;
     int sock_desc;
-    struct sockaddr_in client;
-    memset(&client,0,sizeof(client));
+    struct sockaddr_in server_addr;
+    memset(&server_addr,0,sizeof(server_addr));
     sock_desc=socket(AF_INET,SOCK_STREAM,0);
 
     if(sock_desc==-1)
@@ -20,11 +20,11 @@ int main()
         exit(1);
     }
 
-    client.sin_family=AF_INET;
-    client.sin_addr.s_addr=inet_addr("192.168.31.144");
-    client.sin_port=6606;
+    server_addr.sin_family=AF_INET;
+    server_addr.sin_addr.s_addr=inet_addr("192.168.31.144");
+    server_addr.sin_port=6606;
 
-    k=connect(sock_desc,(struct sockaddr*)&client,sizeof(client));
+    k=connect(sock_desc,(struct sockaddr*)&server_addr,sizeof(server_addr));
     if(k==-1)
     {
         printf("Connecting to server");
