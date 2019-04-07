@@ -9,7 +9,7 @@ class newServer
     private DataInputStream in       =  null; 
   
     // constructor with port 
-    public GetServer(int port) 
+    public newServer(int port) 
     { 
         // starts server and waits for a connection 
         try
