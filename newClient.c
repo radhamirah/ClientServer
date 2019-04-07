@@ -1,51 +1,64 @@
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <netdb.h>
+#include <arpa/inet.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
+#include <sys/socket.h>
 #include <unistd.h>
-#include <errno.h>
-#include <arpa/inet.h>
- 
-int main(void)
-{
-  int sockfd = 0,n = 0;
-  char recvBuff[1024];
-  struct sockaddr_in serv_addr;
- 
-  memset(recvBuff, '0' ,sizeof(recvBuff));
-  if((sockfd = socket(AF_INET, SOCK_STREAM, 0))< 0)
-    {
-      printf("\n Error : Could not create socket \n");
-      return 1;
-    }
- 
-  serv_addr.sin_family = AF_INET;
-  serv_addr.sin_port = htons(6606);
-  serv_addr.sin_addr.s_addr = inet_addr("192.168.31.144");
- 
-  if(connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr))<0)
-    {
-      printf("\n Error : Connect Failed \n");
-      return 1;
-    }
- 
-  while((n = read(sockfd, recvBuff, sizeof(recvBuff)-1)) > 0)
-    {
-      recvBuff[n] = 0;
-      if(fputs(recvBuff, stdout) == EOF)
-    {
-      printf("\n Error : Fputs error");
-    }
-      printf("\n");
-    }
- 
-  if( n < 0)
-    {
-      printf("\n Read Error \n");
-    }
- 
-  return 0;
+
+int main() {
+	const char* server_name = "localhost";
+	const int server_port = 6606;
+
+	struct sockaddr_in server_address;
+	memset(&server_address, 0, sizeof(server_address));
+	server_address.sin_family = AF_INET;
+
+	// creates binary representation of server name
+	// and stores it as sin_addr
+	// http://beej.us/guide/bgnet/output/html/multipage/inet_ntopman.html
+	inet_pton(AF_INET, server_name, &server_address.sin_addr);
+
+	// htons: port in network order format
+	server_address.sin_port = htons(server_port);
+
+	// open a stream socket
+	int sock;
+	if ((sock = socket(PF_INET, SOCK_STREAM, 0)) < 0) {
+		printf("could not create socket\n");
+		return 1;
+	}
+
+	// TCP is connection oriented, a reliable connection
+	// **must** be established before any data is exchanged
+	if (connect(sock, (struct sockaddr*)&server_address,
+	            sizeof(server_address)) < 0) {
+		printf("could not connect to server\n");
+		return 1;
+	}
+
+	// send
+
+	// data that will be sent to the server
+	const char* data_to_send = "Hai Server";
+	send(sock, data_to_send, strlen(data_to_send), 0);
+
+	// receive
+
+	int n = 0;
+	int len = 0, maxlen = 100;
+	char buffer[maxlen];
+	char* pbuffer = buffer;
+
+	// will remain open until the server terminates the connection
+	while ((n = recv(sock, pbuffer, maxlen, 0)) > 0) {
+		pbuffer += n;
+		maxlen -= n;
+		len += n;
+
+		buffer[len] = '\0';
+		printf("received: '%s'\n", buffer);
+	}
+
+	// close the socket
+	close(sock);
+	return 0;
 }
