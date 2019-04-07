@@ -1,61 +1,35 @@
-import java.net.*; 
-import java.io.*; 
-  
-class newServer 
-{ 
-    //initialize socket and input stream 
-    private Socket          socket   = null; 
-    private ServerSocket    server   = null; 
-    private DataInputStream in       =  null; 
-  
-    // constructor with port 
-    public newServer(int port) 
-    { 
-        // starts server and waits for a connection 
-        try
-        { 
-            server = new ServerSocket(port); 
-            System.out.println("Server started"); 
-  
-            System.out.println("tunggu client jap"); 
-  
-            socket = server.accept(); 
-            System.out.println("Client dah accept"); 
-  
-            // takes input from the client socket 
-            in = new DataInputStream( 
-                new BufferedInputStream(socket.getInputStream())); 
-  
-            String line = ""; 
-  
-            // reads message from client until "Over" is sent 
-            while (!line.equals("Over")) 
-            { 
-                try
-                { 
-                    line = in.readUTF(); 
-                    System.out.println(line); 
-  
-                } 
-                catch(IOException i) 
-                { 
-                    System.out.println(i); 
-                } 
-            } 
-            System.out.println("Closing connection"); 
-  
-            // close connection 
-            socket.close(); 
-            in.close(); 
-        } 
-        catch(IOException i) 
-        { 
-            System.out.println(i); 
-        } 
-    } 
-  
-    public static void main(String args[]) 
-    { 
-        newServer server = new newServer(6606); 
-    } 
-} 
+import java.net.*;
+import java.io.*;
+public class newServer 
+{
+	public static void main( String args[]) throws Exception
+	{
+		ServerSocket srs = new ServerSocket(6606);
+		System.out.println("Server is running...");
+		Socket ss=srs.accept();
+		System.out.println("connection establised");
+BufferedReader kb = new BufferedReader(new InputStreamReader(System.in));
+BufferedReader br = new BufferedReader(new InputStreamReader(ss.getInputStream()));
+DataOutputStream dos = new DataOutputStream(ss.getOutputStream());
+ 
+ while(true)
+ {
+  //System.out.println("server repeat as long as client not send null");
+  String s2,s3; 
+  while((s2=br.readLine())!=null)
+  {
+ 	System.out.println("Client said : "+s2);
+ 	System.out.println("Enter text ");
+    s3 = kb.readLine();
+    //System.out.println("Answer send to client machine");
+ 	dos.writeBytes(s3+"\n");
+  }
+  System.out.println("Terminated..");
+  ss.close(); 
+  srs.close();
+  dos.close();
+  kb.close();
+  System.exit(0);
+  }
+ }
+}
