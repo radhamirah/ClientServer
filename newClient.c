@@ -29,8 +29,7 @@ int main() {
 
 	// TCP is connection oriented, a reliable connection
 	// **must** be established before any data is exchanged
-	if (connect(sock, (struct sockaddr*)&server_address,
-	            sizeof(server_address)) < 0) {
+	if (connect(sock, (struct sockaddr*)&server_address, sizeof(server_address)) < 0) {
 		printf("could not connect to server\n");
 		return 1;
 	}
